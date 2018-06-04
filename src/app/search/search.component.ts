@@ -16,7 +16,7 @@ export class SearchComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.placeService.getPlaces().subscribe(data => this.places = data);
+    this.placeService.getRemotePlaces().subscribe(data => this.places = data);
   }
 
   onSearch() {

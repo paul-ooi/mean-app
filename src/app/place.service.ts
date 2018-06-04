@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Place} from './place';
 import {Observable, of} from 'rxjs';
+import { HttpClient } from 'selenium-webdriver/http';
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +20,11 @@ export class PlaceService {
     return of(this.places);
   }
 
-  constructor() {
+  public placesUri = 'localhost:3000/places';
+  getRemotePlaces() : Observable<Place[]> {
+    return this.http.get<Place[]>(this.placesUri);
+  }
+
+  constructor(private http: HttpClient) {
   }
 }

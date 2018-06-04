@@ -1,0 +1,16 @@
+<div id="searchBlock">
+  <input type="text" [(ngModel)]="searchFilter"/>
+  <button (click)="onSearch()">Search!</button>
+  <button (click)="clearSearch()">Clear!</button>
+  <ng-container *ngIf="resultsFilter">
+    <div *ngFor="let p of places">
+      <div *ngIf="doesContain(resultsFilter, p.name) || doesContain(resultsFilter, p.city)">
+        <div class="placeBlock">
+          <div>{{p.id}}</div>
+          <div>{{p.name}}</div>
+          <div>{{p.city}}</div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</div>

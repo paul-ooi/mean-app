@@ -30,10 +30,18 @@ app.get('/places', (req, res) => {
         id: 5,
         name: 'Park',
         city: 'Etobicoke'
-      }
+      },
+      {
+        id: 6,
+        name: 'Art Gallery of Ontario',
+        city: 'Toronto'
+      },
     ];
-    JSON.stringify(places);
-    res.send(places);
+    // JSON.stringify(places);
+    res.set('Access-Control-Allow-Origin', 'http://localhost:4200');//Allow requests from "localhost:4200" domain only
+    // res.set('Access-Control-Allow-Origin', '*');//Allow requests from "*" ALL domains
+    res.send(JSON.stringify(places));
+
 })
 
 var server = app.listen(3000, () => {

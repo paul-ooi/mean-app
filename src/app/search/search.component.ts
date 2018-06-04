@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Place} from '../place';
 import {PlaceService} from '../place.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-search',
@@ -14,9 +15,15 @@ export class SearchComponent implements OnInit {
 
   constructor(private placeService: PlaceService) {
   }
+  
+  private error(error: HttpErrorResponse) {
+    console.log(error);
+  }
 
   ngOnInit() {
-    this.placeService.getRemotePlaces().subscribe(data => this.places = data);
+    this.placeService.getRemotePlaces().subscribe(
+      data => this.places = data,
+      error => this.error(error));
   }
 
   onSearch() {

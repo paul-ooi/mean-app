@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {Place} from '../place';
-import {PlaceService} from '../place.service';
+import {CommsService} from '../comms.service';
 
 @Component({
   selector: 'app-search',
@@ -9,31 +8,33 @@ import {PlaceService} from '../place.service';
 })
 export class SearchComponent implements OnInit {
   searchFilter: string;
-  resultsFilter: string;
-  places: Place[];
 
-  constructor(private placeService: PlaceService) {
+  constructor(private comms: CommsService) {
   }
 
   ngOnInit() {
-    this.placeService.getPlaces().subscribe(data => this.places = data);
   }
 
+  // Accepts new search on button click
   onSearch() {
-    this.resultsFilter = this.searchFilter;
+    // this.resultsFilter = this.searchFilter;
+    this.updateSearch(this.searchFilter);
   }
 
+  // Clear search filter
   clearSearch() {
-    this.resultsFilter = '';
+    this.updateSearch('');
   }
 
-  doesContain(filter: string, data: string) {
-    filter = filter.toUpperCase();
-    data = data.toUpperCase();
-    if (data.includes(filter)) {
-      return true;
-    } else {
-      return false;
+  // Function to update 'search' in CommsService
+  updateSearch(search: string) {
+    this.comms.changeSearch(search);
+  }
+
+  // Accepts new search though Enter key press
+  onKeyPress(event: KeyboardEvent) {
+    if (event.code === 'Enter') {
+      this.updateSearch(this.searchFilter);
     }
   }
 

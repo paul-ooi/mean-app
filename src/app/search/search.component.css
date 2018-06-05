@@ -1,8 +1,11 @@
-#searchBlock {
+.center {
   text-align: center;
 }
 
-.placeBlock {
-  border: 1px solid black;
-  margin: 5px 0;
+.searchButtons {
+  margin-top: 10px;
+}
+
+.searchButtons button {
+  margin:0 5px;
 }

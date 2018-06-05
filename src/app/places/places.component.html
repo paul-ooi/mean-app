@@ -1,0 +1,14 @@
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <ng-container *ngIf="searchFilter">
+        <hr/>
+        <div *ngFor="let p of places">
+          <div *ngIf="doesContain(searchFilter, p.name) || doesContain(searchFilter, p.city)">
+            <app-place [place]="p"></app-place>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</div>

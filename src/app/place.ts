@@ -1,5 +1,7 @@
 export class Place {
-  id: number;
+  types: string[];
+  _id: string;
   name: string;
-  city: string;
+  rating: number;
+  vicinity: string;
 }

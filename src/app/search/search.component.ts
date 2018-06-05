@@ -11,10 +11,6 @@ export class SearchComponent implements OnInit {
 
   constructor(private comms: CommsService) {
   }
-  
-  private error(error: HttpErrorResponse) {
-    console.log(error);
-  }
 
   ngOnInit() {
   }

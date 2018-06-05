@@ -9,7 +9,7 @@ import { HttpClient } from '@angular/common/http';
 
 export class PlaceService {
 
-  public placesUri = 'http://localhost:3000/places';
+  public placesUri = 'http://localhost:3000/matt';
   
   getPlaces() : Observable<Place[]> {
     return this.http.get<Place[]>(this.placesUri);

@@ -1,5 +1,7 @@
 var express = require ('express');
 var app = express();
+var mongoose = require('mongoose');
+
 
 console.log(__dirname);
 
@@ -43,6 +45,31 @@ app.get('/places', (req, res) => {
     res.send(JSON.stringify(places));
 
 })
+
+//db connection taken from hosted mongo db located on mLab
+var dbUrl = 'mongodb://MattMawhinney:Bluejays1@ds247690.mlab.com:47690/learning-node';
+
+//use dbUrl and mongoose to connect to db, mongoose is similar to eloquent in laravel as a ORM for NoSQL
+mongoose.connect(dbUrl, (err) => {
+  console.log('Connected to MongoDB', err);
+});
+
+var db = mongoose.connection;
+
+db.on('error', (err) => {
+  console.log(err);
+});
+//require all the models in the directory models then access each one through dot notation the access model property of model file.
+var models = require('./models');
+var Place = models.places.Place;
+
+
+app.get('/matt', (req, res) => {
+  Place.find({}, (err, places) => {
+    res.set('Access-Control-Allow-Origin', 'http://localhost:4200');
+    res.send(places);
+  });
+});
 
 var server = app.listen(3000, () => {
     console.log('Listening to port: ', server.address().port);

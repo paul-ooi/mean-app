@@ -17,16 +17,17 @@ export class PlacesComponent implements OnInit {
 
   ngOnInit() {
     this.placeService.getPlaces().subscribe(data => this.places = data)
-    this.comms.searchFilter.subscribe(data => this.searchFilter = data);
+    this.comms.searchFilter.subscribe(data => this.searchFilter = data)
+    ;
   }
 
-  doesContain(filter: string, data: string) {
-    filter = filter.toUpperCase();
-    data = data.toUpperCase();
-    if (data.includes(filter)) {
-      return true;
-    } else {
-      return false;
-    }
-  }
+  // doesContain(filter: string, data: string) {
+  //   filter = filter.toUpperCase();
+  //   data = data.toUpperCase();
+  //   if (data.includes(filter)) {
+  //     return true;
+  //   } else {
+  //     return false;
+  //   }
+  // }
 }

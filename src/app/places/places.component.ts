@@ -16,9 +16,8 @@ export class PlacesComponent implements OnInit {
   constructor(private placeService: PlaceService, private comms: CommsService) { }
 
   ngOnInit() {
-    this.placeService.getPlaces().subscribe(data => this.places = data)
-    this.comms.searchFilter.subscribe(data => this.searchFilter = data)
-    ;
+    this.placeService.getPlaces().subscribe(data => this.places = data);
+    this.comms.searchFilter.subscribe(data => this.searchFilter = data);
   }
 
   // doesContain(filter: string, data: string) {

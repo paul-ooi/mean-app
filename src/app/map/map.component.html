@@ -1,3 +1,5 @@
-<p>
-  map works!
-</p>
+<div class="container">
+  <agm-map [latitude]="lat" [longitude]="lng" (mapClick)="onChooseLocation($event)">
+    <agm-marker [latitude]="lat" [longitude]="lng" *ngIf="locationChoosen"></agm-marker>
+  </agm-map>
+</div>

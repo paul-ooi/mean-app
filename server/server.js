@@ -6,11 +6,18 @@ var path = require('path');
 
 console.log(__dirname);
 
-app.use(express.static(__dirname + '/dist')); //SERVER DATA FROM THIS DIRECTORY
-app.listen(process.env.PORT || 8080);
-app.get('/*', function(req, res) {
-    res.sendFile(path.join(__dirname + '/dist/index.html'));
-})
+app.use(express.static(__dirname, 'dist')); //SERVER DATA FROM THIS DIRECTORY
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname + '/dist/index.html'));
+});
+
+const port = process.en.PORT || 3000;
+app.set('port', port);
+
+const server = http.createServer(app);
+server.listen(port, () => console.log('running'));
+
 
 
 app.get('/places', (req, res) => {

@@ -11,7 +11,9 @@ app.get('/*', (req, res) => {
   res.sendFile(path.join(__dirname, '/dist/index.html'));
 });
 
-app.listen(process.env.PORT || 3000);
+app.listen(process.env.PORT || 3000, function() {
+    console.log('Listening to port: ', server.address().port);
+});
 
 app.get('/places', (req, res) => {
     var places = [{

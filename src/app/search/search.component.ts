@@ -1,7 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {CommsService} from '../comms.service';
 import { MapService } from './user-location/map.service';
-
+import { LocationService } from '../location.service';
+import { Geolocation }from '../geolocation';
 
 @Component({
   selector: 'app-search',
@@ -10,10 +11,10 @@ import { MapService } from './user-location/map.service';
 })
 export class SearchComponent implements OnInit {
   searchFilter: string;
+
   userLoc:string;
 
-  constructor(private comms: CommsService, public mapService: MapService) {
-  }
+  constructor(private comms: CommsService, public mapService: MapService, private locationService: LocationService) {  }
 
   ngOnInit() {
   }
@@ -21,6 +22,22 @@ export class SearchComponent implements OnInit {
   // Accepts new search on button click
   onSearch() {
     // this.resultsFilter = this.searchFilter;
+    let searchBy = document.querySelector('input[name="location"]:checked');// GET THE RADIO BUTTON ELEMENT THAT IS CHECKED FOR THE LOCATION
+    console.log(searchBy.id);
+    switch (searchBy.id) {
+      case "gps" : 
+      let gpsLocation = this.locationService.requestGeoLoc();
+        console.log(gpsLocation);
+      // get lat and long and then assign to the props
+        this.comms.changeLocation(gpsLocation);
+        break;
+      case "userDefined" :
+        let userDefinedLocation = this.userLoc;
+        console.log(userDefinedLocation);
+        this.geocoding(userDefinedLocation);
+        break;
+    }
+
     this.updateSearch(this.searchFilter);
     // this.geocoding(this.userLoc);
   }
@@ -49,7 +66,9 @@ export class SearchComponent implements OnInit {
       rtn => {
         let location = rtn[0].geometry.location;
         // get lat and long and then assign to the props
-        let latlng:string[] = [location.lat(), location.lng()];
+        let latlng : Geolocation = new Geolocation();
+        latlng.lat = location.lat();
+        latlng.lng = location.lng();
         this.comms.changeLocation(latlng);
       }
     );

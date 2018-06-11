@@ -1,6 +1,6 @@
 export class Geolocation {
     lat : number;
-    lon : number;
+    lng : number;
     accuracy : number;
     heading : number;
     speed : number;

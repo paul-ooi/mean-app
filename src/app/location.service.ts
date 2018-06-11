@@ -14,14 +14,14 @@ export class LocationService {
  * REQUEST GEOLOCATION POSITION FROM USER (ASYNCHRONOUS)
  * https://developer.mozilla.org/en-US/docs/Web/API/Geolocation/Using_geolocation
  */
-  requestGeoLoc(): void {
+  requestGeoLoc(): Geolocation {
     let location : Geolocation = new Geolocation();
     if ("geolocation" in navigator) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
           // this.userGeoLoc = new Geolocation();
           location.lat = position.coords.latitude;
-          location.lon = position.coords.longitude;
+          location.lng = position.coords.longitude;
           location.accuracy = position.coords.accuracy.valueOf();
           console.log(position);
         },
@@ -33,7 +33,8 @@ export class LocationService {
     } else {
       alert("geolocation unavailable");
     }
-    this.userGeoLoc = of(location);
+    // this.userGeoLoc = of(location);
+    return location;
   }
 
   /**

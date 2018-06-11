@@ -1,5 +1,4 @@
 <div class="container">
-<div *ngIf="userGeoLoc"> {{ getLocation(userGeoLoc) }}</div>
   <agm-map [latitude]="lat" [longitude]="lng" (mapClick)="onChooseLocation($event)">
     <agm-marker [latitude]="lat" [longitude]="lng" *ngIf="locationChoosen"></agm-marker>
   </agm-map>

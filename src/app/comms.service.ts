@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject} from 'rxjs';
+import { Geolocation } from './geolocation';
 
 @Injectable({
   providedIn: 'root'
@@ -9,10 +10,19 @@ export class CommsService {
   private search = new BehaviorSubject<string>('');
   searchFilter = this.search.asObservable();
 
+  private location = new BehaviorSubject<Geolocation>(new Geolocation);
+  searchLocation = this.location.asObservable();
+
   constructor() {
   }
 
   changeSearch(selection: string) {
     this.search.next(selection);
+  }
+
+  // Get latitude and longitude from typed value
+  changeLocation(location : Geolocation){
+    console.log(location);
+    this.location.next(location);//Pass Object with lat and lng
   }
 }

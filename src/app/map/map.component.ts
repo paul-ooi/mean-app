@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import { CommsService }from '../comms.service';
 
 @Component({
   selector: 'app-map',
@@ -11,14 +12,16 @@ export class MapComponent implements OnInit {
   lng = -79.3832;
   locationChoosen = false;
 
-  constructor() {
+  
+
+  constructor(private commsService : CommsService) {
   }
 
   ngOnInit() {
   }
-
+  
   onChooseLocation(event: any) {
-    //console.log(event);
+    // console.log(event);
     this.lat = event.coords.lat;
     this.lng = event.coords.lng;
     this.locationChoosen = true;

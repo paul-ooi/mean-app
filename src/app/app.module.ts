@@ -10,9 +10,9 @@ import {PlacesComponent} from './places/places.component';
 import {PlaceComponent} from './places/place/place.component';
 import {MapComponent} from './map/map.component';
 import {HeaderComponent} from './header/header.component';
-import { GpsComponent } from './user-location/gps/gps.component';
-import { UserLocationComponent } from './user-location/user-location.component';
-import { MapService } from './user-location/map.service';
+import { GpsComponent } from './search/gps/gps.component';
+import { UserLocationComponent } from './search/user-location/user-location.component';
+import { MapService } from './search/user-location/map.service';
 
 @NgModule({
   declarations: [

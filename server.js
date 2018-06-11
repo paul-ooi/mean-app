@@ -12,7 +12,7 @@ app.get('/*', (req, res) => {
 });
 
 app.listen(process.env.PORT || 3000, function() {
-    console.log('Listening to port: ', server.address().port);
+    console.log('Connected');
 });
 
 app.get('/places', (req, res) => {

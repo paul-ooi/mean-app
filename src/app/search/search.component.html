@@ -1,5 +1,10 @@
 <div class="container">
   <div class="row justify-content-center">
+    <div class="col-10 d-flex justify-content-around mb-3">
+      <button class="btn btn-secondary col-4" (click)="userGeoLoc.getLocation()">Use GPS</button>
+      OR
+      <input type="text" class="form-control col-4" placeholder="city or town"/>
+    </div>
     <div class="col-12 col-md-10 col-lg-8">
       <input type="text" class="form-control" [(ngModel)]="searchFilter" (keyup)="onKeyPress($event)" placeholder="Looking for..."/>
     </div>

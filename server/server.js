@@ -40,7 +40,7 @@ app.get('/places', (req, res) => {
       },
     ];
     // JSON.stringify(places);
-    res.set('Access-Control-Allow-Origin', 'http://localhost:4200');//Allow requests from "localhost:4200" domain only
+    res.set('Access-Control-Allow-Origin', 'https://localhost:4200');//Allow requests from "localhost:4200" domain only
     // res.set('Access-Control-Allow-Origin', '*');//Allow requests from "*" ALL domains
     res.send(JSON.stringify(places));
 
@@ -66,7 +66,7 @@ var Place = models.places.Place;
 
 app.get('/matt', (req, res) => {
   Place.find({}, (err, places) => {
-    res.set('Access-Control-Allow-Origin', 'http://localhost:4200');
+    res.set('Access-Control-Allow-Origin', 'https://localhost:4200');
     res.send(places);
   });
 });

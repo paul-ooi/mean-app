@@ -24,4 +24,8 @@ export class MapComponent implements OnInit {
     this.locationChoosen = true;
   }
 
+  getLocation(position) :void {
+    console.log(position);
+  }
+
 }

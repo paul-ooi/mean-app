@@ -1,11 +1,17 @@
 var express = require ('express');
 var app = express();
 var mongoose = require('mongoose');
+var path = require('path');
 
 
 console.log(__dirname);
 
-app.use(express.static(__dirname)); //SERVER DATA FROM THIS DIRECTORY
+app.use(express.static(__dirname + '/dist')); //SERVER DATA FROM THIS DIRECTORY
+app.listen(process.env.PORT || 8080);
+app.get('/*', function(req, res) {
+    res.sendFile(path.join(__dirname + '/dist/index.html'));
+})
+
 
 app.get('/places', (req, res) => {
     var places = [{
@@ -63,7 +69,7 @@ db.on('error', (err) => {
 var models = require('./models');
 var Place = models.places.Place;
 
-
+/*
 app.get('/matt', (req, res) => {
   Place.find({}, (err, places) => {
     res.set('Access-Control-Allow-Origin', 'https://localhost:4200');
@@ -73,4 +79,4 @@ app.get('/matt', (req, res) => {
 
 var server = app.listen(process.env.PORT || 3000, () => {
     console.log('Listening to port: ', server.address().port);
-})
+})*/

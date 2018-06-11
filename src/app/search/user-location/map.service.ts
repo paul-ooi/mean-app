@@ -20,7 +20,6 @@ export class MapService {
                     if (status === google.maps.GeocoderStatus.OK) {
                         resolve(result);
                         console.log(result);
-                                                
                     } else {
                         reject(status);
                     }

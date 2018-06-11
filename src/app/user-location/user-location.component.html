@@ -1,0 +1,24 @@
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-10 col-lg-8">
+      <app-gps></app-gps>
+      <form (ngSubmit)="geocoding(f)" #f="ngForm" novalidate class="center-block">
+        <div class="row">
+          <input type="text" class="form-control" ngModel name="current_location" placeholder="Your location..."/>
+        </div>
+        <div class="row justify-content-center">
+          <button class="btn btn-primary mt-1 col-md-4" type="submit">Find</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="row justify-content-center mt-3">
+    <agm-map
+      [latitude]="lat"
+      [longitude]="lng"
+      [zoom]="zoom"
+    >
+    </agm-map>
+  </div>
+</div>
+

@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {CommsService} from '../comms.service';
-import { Geolocation } from '../geolocation';
-import { LocationService } from '../location.service';
+
 
 @Component({
   selector: 'app-search',
@@ -11,7 +10,7 @@ import { LocationService } from '../location.service';
 export class SearchComponent implements OnInit {
   searchFilter: string;
 
-  constructor(private comms: CommsService, public userGeoLoc : LocationService) {
+  constructor(private comms: CommsService) {
   }
 
   ngOnInit() {
@@ -30,7 +29,7 @@ export class SearchComponent implements OnInit {
 
   // Function to update 'search' in CommsService
   updateSearch(search: string) {
-    this.comms.changeSearch(search);
+    this.comms.changeSearch(search);  
   }
 
   // Accepts new search though Enter key press

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Geolocation } from './geolocation';
-import { Observable, of } from 'rxjs';
+import { Observable, of, BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -14,5 +14,4 @@ export class LocationService {
     this.userGeoLoc.requestGeoLoc();
     return of (this.userGeoLoc);
   }
-
 }

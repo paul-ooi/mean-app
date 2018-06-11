@@ -2,21 +2,23 @@ var express = require ('express');
 var app = express();
 var mongoose = require('mongoose');
 var path = require('path');
+var http = require('http');
 
 
 console.log(__dirname);
 
-app.use(express.static(__dirname, 'dist')); //SERVER DATA FROM THIS DIRECTORY
+app.use(express.static(__dirname, '/dist')); //SERVER DATA FROM THIS DIRECTORY
 
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname + '/dist/index.html'));
+  res.sendFile(path.join(__dirname, 'dist/index.html'));
 });
 
-const port = process.en.PORT || 3000;
+const port = process.env.PORT || 3000;
 app.set('port', port);
-
 const server = http.createServer(app);
-server.listen(port, () => console.log('running'));
+server.listen(port, () => {
+    console.log('running');
+});
 
 
 
@@ -58,7 +60,7 @@ app.get('/places', (req, res) => {
     res.send(JSON.stringify(places));
 
 })
-
+/*
 //db connection taken from hosted mongo db located on mLab
 var dbUrl = 'mongodb://MattMawhinney:Bluejays1@ds247690.mlab.com:47690/learning-node';
 
@@ -76,7 +78,7 @@ db.on('error', (err) => {
 var models = require('./models');
 var Place = models.places.Place;
 
-/*
+
 app.get('/matt', (req, res) => {
   Place.find({}, (err, places) => {
     res.set('Access-Control-Allow-Origin', 'https://localhost:4200');

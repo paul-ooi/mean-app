@@ -5,14 +5,14 @@ const path = require('path');
 const port = process.env.PORT || 3000;
 const server = require('http').Server(app);
 
-app.use(express.static(__dirname, 'dist', {index: false})); //SERVER DATA FROM THIS DIRECTORY
+app.use(express.static(path.join(__dirname, 'dist'))); //SERVER DATA FROM THIS DIRECTORY
 
 server.listen(port, function() {
     console.log('Connected to Port: ' + port);
 });
 
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'test-app', 'index.html'));
+  res.sendFile(path.join(__dirname, 'dist/index.html'));
 });
 
 

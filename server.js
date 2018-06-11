@@ -2,25 +2,16 @@ var express = require ('express');
 var app = express();
 var mongoose = require('mongoose');
 var path = require('path');
-var http = require('http');
-
 
 console.log(__dirname);
 
 app.use(express.static(__dirname, '/dist')); //SERVER DATA FROM THIS DIRECTORY
 
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'dist/index.html'));
+app.get('/*', (req, res) => {
+  res.sendFile(path.join(__dirname, '/dist/index.html'));
 });
 
-const port = process.env.PORT || 3000;
-app.set('port', port);
-const server = http.createServer(app);
-server.listen(port, () => {
-    console.log('running');
-});
-
-
+app.listen(process.env.PORT || 3000);
 
 app.get('/places', (req, res) => {
     var places = [{

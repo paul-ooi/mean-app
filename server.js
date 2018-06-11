@@ -5,10 +5,10 @@ var path = require('path');
 
 console.log(__dirname);
 
-app.use(express.static(__dirname, '/dist')); //SERVER DATA FROM THIS DIRECTORY
+app.use(express.static(__dirname)); //SERVER DATA FROM THIS DIRECTORY
 
 app.get('/*', (req, res) => {
-  res.sendFile(path.join(__dirname, '/dist/index.html'));
+  res.sendFile(path.join(__dirname, './src/index.html'));
 });
 
 app.listen(process.env.PORT || 3000, function() {

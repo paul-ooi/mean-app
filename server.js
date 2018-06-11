@@ -1,20 +1,22 @@
-var express = require ('express');
-var app = express();
-var mongoose = require('mongoose');
-var path = require('path');
+const express = require ('express');
+const app = express();
+const mongoose = require('mongoose');
+const path = require('path');
+const port = process.env.PORT || 3000;
+const server = require('http').Server(app);
 
-console.log(__dirname);
+app.use(express.static(__dirname, 'dist', {index: false})); //SERVER DATA FROM THIS DIRECTORY
 
-app.use(express.static(__dirname)); //SERVER DATA FROM THIS DIRECTORY
-
-app.get('/*', (req, res) => {
-  res.sendFile(path.join(__dirname, './src/index.html'));
+server.listen(port, function() {
+    console.log('Connected to Port: ' + port);
 });
 
-app.listen(process.env.PORT || 3000, function() {
-    console.log('Connected');
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'src', 'index.html'));
 });
 
+
+/*
 app.get('/places', (req, res) => {
     var places = [{
         id: 1,
@@ -53,7 +55,7 @@ app.get('/places', (req, res) => {
     res.send(JSON.stringify(places));
 
 })
-/*
+
 //db connection taken from hosted mongo db located on mLab
 var dbUrl = 'mongodb://MattMawhinney:Bluejays1@ds247690.mlab.com:47690/learning-node';
 

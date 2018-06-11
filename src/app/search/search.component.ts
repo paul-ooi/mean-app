@@ -28,7 +28,7 @@ export class SearchComponent implements OnInit {
 
   // Function to update 'search' in CommsService
   updateSearch(search: string) {
-    this.comms.changeSearch(search);
+    this.comms.changeSearch(search);  
   }
 
   // Accepts new search though Enter key press

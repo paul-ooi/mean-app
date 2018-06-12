@@ -1,20 +1,20 @@
-import {Component, OnInit, NgZone, ViewChild, ElementRef} from '@angular/core';
+import {Component, OnInit, NgZone, DoCheck} from '@angular/core';
 import {CommsService} from '../comms.service';
+import {LifecycleHooks} from '@angular/compiler/src/lifecycle_reflector';
 
 import {} from 'googlemaps';
-import {AgmMap} from '@agm/core';
 import {MapsAPILoader} from '@agm/core';
-import {forEach} from '@angular/router/src/utils/collection';
-
 
 @Component({
   selector: 'app-map',
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.css']
 })
-export class MapComponent implements OnInit {
+export class MapComponent implements OnInit, DoCheck {
+  oldSearchFilter = '';
   searchFilter = '';
-  locationChoosen = false;
+  newSearch = false;
+  locationChosen = false;
   mapResults: object;
 
   lat = 43.6532;
@@ -28,31 +28,34 @@ export class MapComponent implements OnInit {
   }
 
   ngOnInit() {
-
+    this.comms.searchFilter.subscribe(data => this.searchFilter = data);
     // set current position
-    //this.setCurrentPosition();
-
-    // load Places Autocomplete
-    this.mapsAPILoader.load().then(() => {
-      let search = new google.maps.places.PlacesService(document.createElement('div'));
-      let toronto = new google.maps.LatLng(43.6532, -79.3832);
-      let request: object = {
-        location: toronto,
-        radius: 500,
-        type: ['restaurant'],
-        keyword: 'pizza'
-      };
-      search.nearbySearch(request, (results, status) => {
-        if (status === google.maps.places.PlacesServiceStatus.OK) {
-          console.log(results);
-          this.mapResults = results;
-          // for (let r of results) {
-          //   console.log(r.geometry.location.lat() + ' | ' + r.geometry.location.lng());
-          // }
-        }
-      });
-    });
+    // this.setCurrentPosition();
   }
+
+  ngDoCheck() {
+    if (this.searchFilter !== this.oldSearchFilter) {
+      // places search
+      this.mapsAPILoader.load().then(() => {
+        let search = new google.maps.places.PlacesService(document.createElement('div'));
+        let toronto = new google.maps.LatLng(43.6532, -79.3832);
+        let request: object = {
+          location: toronto,
+          radius: 500,
+          type: ['point_of_interest'],
+          keyword: this.searchFilter
+        };
+        search.nearbySearch(request, (results, status) => {
+          if (status === google.maps.places.PlacesServiceStatus.OK) {
+            this.mapResults = results;
+          }
+        });
+      });
+
+      this.oldSearchFilter = this.searchFilter;
+    }
+  }
+
 
   private setCurrentPosition() {
     if ('geolocation' in navigator) {
@@ -68,7 +71,7 @@ export class MapComponent implements OnInit {
     console.log(event);
     this.lat = event.coords.lat;
     this.lng = event.coords.lng;
-    this.locationChoosen = true;
+    this.locationChosen = true;
   }
 
 }

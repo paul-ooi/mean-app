@@ -1,33 +1,78 @@
-import {Component, OnInit} from '@angular/core';
-import { CommsService }from '../comms.service';
+import {Component, OnInit, NgZone, DoCheck} from '@angular/core';
+import {CommsService} from '../comms.service';
+import {} from 'googlemaps';
+import {MapsAPILoader} from '@agm/core';
+import {Geolocation} from '../geolocation';
 
 @Component({
   selector: 'app-map',
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.css']
 })
-export class MapComponent implements OnInit {
+export class MapComponent implements OnInit, DoCheck {
+  oldSearchFilter = '';
+  searchFilter = '';
+  searchLocation: Geolocation;
+  locationChosen = false;
+  loc: object;
 
+  // Map
   lat = 43.6532;
   lng = -79.3832;
-  locationChoosen = false;
+  zoom = 13;
+  maxMarkers = 10;
+  mapResults: object;
 
-  
-
-  constructor(private commsService : CommsService) {
+  constructor(private commsService: CommsService,
+              private mapsAPILoader: MapsAPILoader,
+              private ngZone: NgZone) {
   }
 
   ngOnInit() {
-  }
-  
-  onChooseLocation(event: any) {
-    // console.log(event);
-    this.lat = event.coords.lat;
-    this.lng = event.coords.lng;
-    this.locationChoosen = true;
+    this.commsService.searchFilter.subscribe(data => this.searchFilter = data);
+    this.commsService.searchLocation.subscribe(data => this.searchLocation = data);
   }
 
-  getLocation(position) :void {
+  ngDoCheck() {
+    this.ngZone.run(() => {
+      if (this.searchLocation.lat != null) {
+        this.lat = this.searchLocation.lat;
+        this.lng = this.searchLocation.lng;
+        this.loc = new google.maps.LatLng(this.searchLocation.lat, this.searchLocation.lng);
+        if (this.searchFilter !== this.oldSearchFilter) {
+          // places search
+          this.mapsAPILoader.load().then(() => {
+            // let search = new google.maps.places.PlacesService(document.createElement('div'));
+            let search = new google.maps.places.PlacesService(document.createElement('div'));
+            let toronto = new google.maps.LatLng(43.6532, -79.3832);
+            let request: object = {
+              location: this.loc,
+              radius: 1500,
+              type: ['point_of_interest'],
+              keyword: this.searchFilter
+            };
+            search.nearbySearch(request, (results, status) => {
+              if (status === google.maps.places.PlacesServiceStatus.OK) {
+                console.log(results);
+                this.mapResults = results;
+              }
+            });
+          });
+
+          this.oldSearchFilter = this.searchFilter;
+        }
+      }
+    });
+  }
+
+  // onChooseLocation(event: any) {
+  //   // console.log(event);
+  //   this.lat = event.coords.lat;
+  //   this.lng = event.coords.lng;
+  //   this.locationChosen = true;
+  // }
+
+  getLocation(position): void {
     console.log(position);
   }
 

@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject} from 'rxjs';
-import { Geolocation } from './geolocation';
+import {Geolocation} from './geolocation';
 
 @Injectable({
   providedIn: 'root'
@@ -21,8 +21,7 @@ export class CommsService {
   }
 
   // Get latitude and longitude from typed value
-  changeLocation(location : Geolocation){
-    console.log(location);
+  changeLocation(location: Geolocation) {
     this.location.next(location);//Pass Object with lat and lng
   }
 }

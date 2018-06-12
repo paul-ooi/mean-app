@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
-import { Geolocation } from './geolocation';
-import { Observable, of, BehaviorSubject } from 'rxjs';
+import {Injectable} from '@angular/core';
+import {Geolocation} from './geolocation';
+import {Observable, of, BehaviorSubject} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -8,15 +8,16 @@ import { Observable, of, BehaviorSubject } from 'rxjs';
 export class LocationService {
   userGeoLoc: Observable<Geolocation>;
 
-  constructor() { }
+  constructor() {
+  }
 
   /**
- * REQUEST GEOLOCATION POSITION FROM USER (ASYNCHRONOUS)
- * https://developer.mozilla.org/en-US/docs/Web/API/Geolocation/Using_geolocation
- */
+   * REQUEST GEOLOCATION POSITION FROM USER (ASYNCHRONOUS)
+   * https://developer.mozilla.org/en-US/docs/Web/API/Geolocation/Using_geolocation
+   */
   requestGeoLoc(): Geolocation {
-    let location : Geolocation = new Geolocation();
-    if ("geolocation" in navigator) {
+    let location: Geolocation = new Geolocation();
+    if ('geolocation' in navigator) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
           // this.userGeoLoc = new Geolocation();
@@ -29,9 +30,9 @@ export class LocationService {
           console.log(error.code);// CODE IS 1 WHEN USER DENIES PERMISSION
           console.log(error.message);
           console.log(error.PERMISSION_DENIED);
-        })
+        });
     } else {
-      alert("geolocation unavailable");
+      alert('geolocation unavailable');
     }
     // this.userGeoLoc = of(location);
     return location;

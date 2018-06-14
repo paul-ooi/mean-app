@@ -1,0 +1,28 @@
+<div class="container py-3">
+  <h2>Login</h2>
+  <div class="col-md-8 col-md-offset-2 my-3">
+    <form [formGroup]="form__login" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="email">* Email</label>
+        <input 
+          type="email" 
+          id="email" 
+          class="form-control"
+          formControlName="email">
+      </div>
+      <div class="form-group">
+        <label for="password">* Password</label>
+        <input 
+          type="password" 
+          id="password" 
+          class="form-control"
+          formControlName="password">
+      </div>
+      <p [hidden]="form__login.valid">Please provide your email address and password.</p>
+      <button class="btn btn-success" type="submit" [disabled]="!form__login.valid">Login</button>
+    </form>
+      
+  </div>
+</div>
+
+

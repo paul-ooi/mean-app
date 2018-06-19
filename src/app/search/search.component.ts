@@ -14,10 +14,13 @@ export class SearchComponent implements OnInit {
 
   userLoc: string;
 
+  newSearch: boolean;
+
   constructor(private comms: CommsService, public mapService: MapService, private locationService: LocationService) {
   }
 
   ngOnInit() {
+    this.comms.newSearch.subscribe(data => this.newSearch = data);
   }
 
   // Accepts new search on button click
@@ -42,6 +45,11 @@ export class SearchComponent implements OnInit {
 
     this.updateSearch(this.searchFilter);
     // this.geocoding(this.userLoc);
+
+    // this.comms.toggleSearch(true);
+    setTimeout(() => {
+      this.comms.toggleSearch(true);
+    }, 1000);
   }
 
   // Clear search filter

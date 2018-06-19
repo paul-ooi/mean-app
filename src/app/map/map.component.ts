@@ -23,6 +23,8 @@ export class MapComponent implements OnInit, DoCheck {
   maxMarkers = 10;
   mapResults: object;
 
+  newSearch: boolean;
+
   constructor(private commsService: CommsService,
               private mapsAPILoader: MapsAPILoader,
               private ngZone: NgZone) {
@@ -31,38 +33,42 @@ export class MapComponent implements OnInit, DoCheck {
   ngOnInit() {
     this.commsService.searchFilter.subscribe(data => this.searchFilter = data);
     this.commsService.searchLocation.subscribe(data => this.searchLocation = data);
+    this.commsService.newSearch.subscribe(data => this.newSearch = data);
   }
 
   ngDoCheck() {
-    this.ngZone.run(() => {
-      if (this.searchLocation.lat != null) {
-        this.lat = this.searchLocation.lat;
-        this.lng = this.searchLocation.lng;
-        this.loc = new google.maps.LatLng(this.searchLocation.lat, this.searchLocation.lng);
-        if (this.searchFilter !== this.oldSearchFilter) {
-          // places search
-          this.mapsAPILoader.load().then(() => {
-            // let search = new google.maps.places.PlacesService(document.createElement('div'));
-            let search = new google.maps.places.PlacesService(document.createElement('div'));
-            let toronto = new google.maps.LatLng(43.6532, -79.3832);
-            let request: object = {
-              location: this.loc,
-              radius: 1500,
-              type: ['point_of_interest'],
-              keyword: this.searchFilter
-            };
-            search.nearbySearch(request, (results, status) => {
-              if (status === google.maps.places.PlacesServiceStatus.OK) {
-                console.log(results);
-                this.mapResults = results;
-              }
-            });
-          });
+    // this.ngZone.run(() => {
+    //
+    // });
+    //console.log(this.newSearch);
 
-          this.oldSearchFilter = this.searchFilter;
-        }
-      }
-    });
+    if (this.newSearch) {
+      this.lat = this.searchLocation.lat;
+      this.lng = this.searchLocation.lng;
+      this.loc = new google.maps.LatLng(this.searchLocation.lat, this.searchLocation.lng);
+
+      // places search
+      this.mapsAPILoader.load().then(() => {
+        // let search = new google.maps.places.PlacesService(document.createElement('div'));
+        let search = new google.maps.places.PlacesService(document.createElement('div'));
+        let toronto = new google.maps.LatLng(43.6532, -79.3832);
+        let request: object = {
+          location: this.loc,
+          radius: 1500,
+          type: ['point_of_interest'],
+          keyword: this.searchFilter
+        };
+        search.nearbySearch(request, (results, status) => {
+          if (status === google.maps.places.PlacesServiceStatus.OK) {
+            console.log(results);
+            this.mapResults = results;
+          }
+        });
+      });
+      this.commsService.toggleSearch(false);
+
+    }
+
   }
 
   // onChooseLocation(event: any) {

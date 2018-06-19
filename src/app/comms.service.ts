@@ -13,6 +13,9 @@ export class CommsService {
   private location = new BehaviorSubject<Geolocation>(new Geolocation);
   searchLocation = this.location.asObservable();
 
+  private newSearchBehaviour = new BehaviorSubject<boolean>(false);
+  newSearch = this.newSearchBehaviour.asObservable();
+
   constructor() {
   }
 
@@ -23,5 +26,13 @@ export class CommsService {
   // Get latitude and longitude from typed value
   changeLocation(location: Geolocation) {
     this.location.next(location);//Pass Object with lat and lng
+  }
+
+  toggleSearch(state: boolean) {
+    if (state) {
+      this.newSearchBehaviour.next(true);
+    } else {
+      this.newSearchBehaviour.next(false);
+    }
   }
 }

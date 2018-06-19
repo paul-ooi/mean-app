@@ -11,8 +11,6 @@ import {PlaceComponent} from './places/place/place.component';
 import {MapComponent} from './map/map.component';
 import {HeaderComponent} from './header/header.component';
 import {GpsComponent} from './search/gps/gps.component';
-import {UserLocationComponent} from './search/user-location/user-location.component';
-import {MapService} from './search/user-location/map.service';
 
 @NgModule({
   declarations: [
@@ -22,7 +20,6 @@ import {MapService} from './search/user-location/map.service';
     PlaceComponent,
     MapComponent,
     HeaderComponent,
-    UserLocationComponent,
     GpsComponent
   ],
   imports: [
@@ -34,9 +31,7 @@ import {MapService} from './search/user-location/map.service';
       libraries: ['places']
     }),
   ],
-  providers: [
-    MapService
-  ],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule {

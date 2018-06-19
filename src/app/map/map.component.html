@@ -4,9 +4,12 @@
 <!--</agm-map>-->
 <!--</div>-->
 <div class="container">
-  <div>Location Coordinates: ({{searchLocation.lat}}, {{searchLocation.lng}})</div>
-  <div>Search: {{searchFilter}}</div>
-  <agm-map [latitude]="lat" [longitude]="lng" [zoom]="zoom" [scrollwheel]="true">
+  <agm-map
+    [latitude]="lat"
+    [longitude]="lng"
+    [zoom]="zoom"
+    [scrollwheel]="true"
+  >
     <ng-container *ngIf="mapResults">
       <!--<agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>-->
       <ng-container *ngFor="let marker of mapResults; let i = index">

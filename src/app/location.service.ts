@@ -1,14 +1,18 @@
 import {Injectable} from '@angular/core';
 import {Geolocation} from './geolocation';
 import {Observable, of, BehaviorSubject} from 'rxjs';
+import {MapsAPILoader} from '@agm/core';
+import {CommsService} from './comms.service';
+
+declare let google: any;
 
 @Injectable({
   providedIn: 'root'
 })
 export class LocationService {
-  userGeoLoc: Observable<Geolocation>;
+  private geocoder: any = null;
 
-  constructor() {
+  constructor(private comms: CommsService, private mapsAPILoader: MapsAPILoader) {
   }
 
   /**
@@ -20,7 +24,7 @@ export class LocationService {
     if ('geolocation' in navigator) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
-          // this.userGeoLoc = new Geolocation();
+          console.log(position);
           location.lat = position.coords.latitude;
           location.lng = position.coords.longitude;
           location.accuracy = position.coords.accuracy.valueOf();
@@ -34,9 +38,25 @@ export class LocationService {
     } else {
       alert('geolocation unavailable');
     }
-    // this.userGeoLoc = of(location);
     return location;
   }
+
+  geocoding(current_location: string): Promise<any> {
+    return this.mapsAPILoader.load().then(() => {
+      this.geocoder = new google.maps.Geocoder();
+
+      return new Promise((resolve, reject) => {
+        this.geocoder.geocode({'address': current_location}, (result: any, status: any) => {
+          if (status === google.maps.GeocoderStatus.OK) {
+            resolve(result);
+            console.log(result);
+          } else {
+            reject(status);
+          }
+        });
+      });
+    });
+  } // end of geocoding function
 
   /**
    * REQUEST GEOLOCATION POSITION FROM USER (ASYNCHRONOUS)
